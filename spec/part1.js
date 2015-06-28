@@ -75,6 +75,19 @@
     });
 
     describe('each', function() {
+
+      _.each = function(list, iteratee) {
+        if (Array.isArray(list)) {
+          for (var i = 0; i < list.length; i++) {
+            iteratee(list[i], i, list);
+          }
+        } else {
+          for (var key in list) {
+            iteratee(list[key], key, list);
+          }
+        }
+      };
+
       it('should iterate over arrays, providing access to the element, index, and array itself', function() {
         var animals = ['ant', 'bat', 'cat'];
         var iterationInputs = [];
@@ -124,6 +137,17 @@
     });
 
     describe('indexOf', function() {
+
+      _.indexOf = function(array, value) {
+        var result = -1;
+        for (var i = 0; i < array.length; i++) {
+          if (array[i] === value) {
+            return i;
+          }
+        }
+        return result;
+      };
+
       it('should find 40 in the list', function() {
         var numbers = [10, 20, 30, 40, 50];
 
@@ -150,6 +174,17 @@
     });
 
     describe('filter', function() {
+
+      _.filter = function(list, predicate) {
+        var result = [];
+        _.each(list, function(elem) {
+          if (predicate(elem)) {
+            result.push(elem);
+          }
+        });
+        return result;
+      };
+
       it('should return all even numbers in an array', function() {
         var isEven = function(num) { return num % 2 === 0; };
         var evens = _.filter([1, 2, 3, 4, 5, 6], isEven);
