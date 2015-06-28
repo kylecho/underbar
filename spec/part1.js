@@ -6,6 +6,10 @@
     describe('identity', function() {
       var uniqueObject = {};
 
+      _.identity = function(value) {
+        return value;
+      };
+
       it('should return whatever value is passed into it', function() {
         expect(_.identity(1)).to.equal(1);
         expect(_.identity('string')).to.equal('string');
@@ -15,6 +19,15 @@
     });
 
     describe('first', function() {
+
+      _.first = function(array, n) {
+        if (arguments.length < 2) {
+          return array[0];
+        } else {
+          return array.slice(0, n);
+        }
+      };
+
       it('should be able to pull out the first element of an array', function() {
         expect(_.first([1,2,3])).to.equal(1);
       });
@@ -33,6 +46,17 @@
     });
 
     describe('last', function() {
+
+      _.last = function(array, n) {
+        if (arguments.length < 2) {
+          return array[array.length - 1];
+        } else if (array.length < n) {
+          return array;
+        } else {
+          return array.slice(array.length - n);
+        }
+      };
+
       it('should pull the last element from an array', function() {
         expect(_.last([1,2,3])).to.equal(3);
       });
