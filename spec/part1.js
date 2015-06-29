@@ -209,6 +209,17 @@
     });
 
     describe('reject', function() {
+
+      _.reject = function (list, predicate) {
+        var result = [];
+        _.each(list, function(elem) {
+          if (!predicate(elem)) {
+            result.push(elem);
+          }
+        });
+        return result;
+      };
+
       it('should reject all even numbers', function() {
         var isEven = function(num) { return num % 2 === 0; };
         var odds = _.reject([1, 2, 3, 4, 5, 6], isEven);
@@ -233,6 +244,17 @@
     });
 
     describe('uniq', function() {
+
+      _.uniq = function (array) {
+        var result = [];
+        _.each(array, function(elem) {
+          if (_.indexOf(result, elem) === -1) {
+            result.push(elem);
+          }
+        });
+        return result;
+      };
+
       it('should return all unique values contained in an unsorted array', function() {
         var numbers = [1, 2, 1, 3, 1, 4];
 
@@ -255,6 +277,15 @@
     });
 
     describe('map', function() {
+
+      _.map = function(list, iteratee) {
+        var result = [];
+        _.each(list, function(value, index, list) {
+          result.push(iteratee(value, index, list));
+        });
+        return result;
+      };
+
       it('should apply a function to every value in an array', function() {
         var doubledNumbers = _.map([1, 2, 3], function(num) {
           return num * 2;
@@ -274,6 +305,13 @@
     });
 
     describe('pluck', function() {
+
+      _.pluck = function(list, propertyName) {
+        return _.map(list, function(value) {
+          return value[propertyName];
+        });
+      };
+
       it('should return values contained at a user-defined property', function() {
         var people = [
           { name: 'moe', age: 30 },
@@ -296,6 +334,20 @@
     });
 
     describe('reduce', function() {
+
+      _.reduce = function(list, iteratee, memo) {
+        var isMemo = arguments.length > 2;
+        _.each(list, function(elem) {
+          if (!isMemo) {
+            isMemo = true;
+            memo = elem;
+          } else {
+            memo = iteratee(memo, elem);
+          }
+        });
+        return memo;
+      };
+
       it('should be able to sum up an array', function() {
         var add = function(tally, item) {return tally + item; };
         var total = _.reduce([1, 2, 3], add, 0);
