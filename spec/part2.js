@@ -3,6 +3,21 @@
 
   describe('Part II', function() {
     describe('contains', function() {
+
+      _.contains = function(list, value) {
+        var result = false;
+        if (Array.isArray(list)) {
+          return _.indexOf(list, value) > -1;
+        } else {
+          for (var key in list) {
+            if (list[key] === value) {
+              result = true;
+            }
+          }
+        }
+        return result;
+      };
+
       it('should return false if a collection does not contain a user-specified value', function() {
         expect(_.contains([4, 5, 6], 2)).to.be.false;
       });
@@ -17,6 +32,18 @@
     });
 
     describe('every', function() {
+
+      _.every = function(list, predicate) {
+        var result = true;
+        var predicate = predicate || function(elem) { return elem; };
+        _.each(list, function(elem) {
+          if (!predicate(elem)) {
+            result = false;
+          }
+        });
+        return result;
+      };
+
       var isEven = function(num) {
         return num % 2 === 0;
       };
@@ -60,6 +87,18 @@
     });
 
     describe('some', function() {
+
+      _.some = function(list, predicate) {
+        var result = false;
+        var predicate = predicate || function(elem) { return elem; };
+        _.each(list, function(elem) {
+          if (predicate(elem)) {
+            result = true;
+          }
+        });
+        return result;
+      };
+
       var isEven = function(number){
         return number % 2 === 0;
       };
@@ -105,6 +144,17 @@
     });
 
     describe('extend', function() {
+
+      _.extend = function(destination) {
+        var result = destination;
+        for (var i = 1; i < arguments.length; i++) {
+          for (var key in arguments[i]) {
+            result[key] = arguments[i][key];
+          }
+        }
+        return result;
+      };
+
       it('returns the first argument', function() {
         var to = {};
         var from = {};
@@ -151,6 +201,19 @@
     });
 
     describe('defaults', function() {
+
+      _.defaults = function(object) {
+        var result = object;
+        for (var i = 1; i < arguments.length; i++) {
+          for (var key in arguments[i]) {
+            if (result[key] === undefined) {
+              result[key] = arguments[i][key];
+            }
+          }
+        }
+        return object;
+      };
+
       it('returns the first argument', function() {
         var to = {};
         var from = {};
@@ -195,6 +258,19 @@
     });
 
     describe('once', function() {
+
+      _.once = function(func) {
+        var called = false;
+        return function() {
+          if (!called) {
+            called = true;
+            return func();
+          } else {
+            return false;
+          }
+        };
+      };
+
       it('should only run a user-defined function if it hasn\'t been run before', function() {
         var num = 0;
         var increment = _.once(function() {
@@ -209,6 +285,7 @@
     });
 
     describe('memoize', function() {
+
       var add, memoAdd;
 
       beforeEach(function() {
