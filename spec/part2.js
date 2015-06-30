@@ -286,6 +286,20 @@
 
     describe('memoize', function() {
 
+      _.memoize = function(func) {
+        var memo = {};
+
+        return function() {
+          var args = Array.prototype.slice.call(arguments);
+
+          if (args in memo) {
+            return memo[args];
+          } else {
+            return (memo[args] = func.apply(this, args));
+          }
+        }
+      };
+
       var add, memoAdd;
 
       beforeEach(function() {
@@ -321,6 +335,19 @@
     });
 
     describe('delay', function() {
+
+      _.delay = function(func, wait) {
+        var args = Array.prototype.slice.call(arguments).slice(2);
+
+        if (args) {
+          return setTimeout(function(){
+            return func.apply(this, args);
+          }, wait);
+        } else {
+          return setTimeout(func, wait);
+        }
+      };
+
       var callback;
 
       beforeEach(function() {
@@ -347,6 +374,21 @@
     });
 
     describe('shuffle', function() {
+
+      _.shuffle = function(array) {
+        var result = array.slice();
+        var tempi;
+        var tempj;
+        for (var i = array.length - 1; i >= 0; i--) {
+            var j = Math.floor(Math.random() * i);
+            tempi = result[i];
+            tempj = result[j];
+            result[i] = tempj;
+            result[j] = tempi;
+        }
+        return result;
+      };
+
       it('should not modify the original object', function() {
         var numbers = [4, 5, 6];
         var shuffled = _.shuffle(numbers).sort();
