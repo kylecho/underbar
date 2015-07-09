@@ -3,21 +3,6 @@
 
   describe('Part II', function() {
     describe('contains', function() {
-
-      _.contains = function(list, value) {
-        var result = false;
-        if (Array.isArray(list)) {
-          return _.indexOf(list, value) > -1;
-        } else {
-          for (var key in list) {
-            if (list[key] === value) {
-              result = true;
-            }
-          }
-        }
-        return result;
-      };
-
       it('should return false if a collection does not contain a user-specified value', function() {
         expect(_.contains([4, 5, 6], 2)).to.be.false;
       });
@@ -32,18 +17,6 @@
     });
 
     describe('every', function() {
-
-      _.every = function(list, predicate) {
-        var result = true;
-        var predicate = predicate || function(elem) { return elem; };
-        _.each(list, function(elem) {
-          if (!predicate(elem)) {
-            result = false;
-          }
-        });
-        return result;
-      };
-
       var isEven = function(num) {
         return num % 2 === 0;
       };
@@ -87,18 +60,6 @@
     });
 
     describe('some', function() {
-
-      _.some = function(list, predicate) {
-        var result = false;
-        var predicate = predicate || function(elem) { return elem; };
-        _.each(list, function(elem) {
-          if (predicate(elem)) {
-            result = true;
-          }
-        });
-        return result;
-      };
-
       var isEven = function(number){
         return number % 2 === 0;
       };
@@ -144,17 +105,6 @@
     });
 
     describe('extend', function() {
-
-      _.extend = function(destination) {
-        var result = destination;
-        for (var i = 1; i < arguments.length; i++) {
-          for (var key in arguments[i]) {
-            result[key] = arguments[i][key];
-          }
-        }
-        return result;
-      };
-
       it('returns the first argument', function() {
         var to = {};
         var from = {};
@@ -201,19 +151,6 @@
     });
 
     describe('defaults', function() {
-
-      _.defaults = function(object) {
-        var result = object;
-        for (var i = 1; i < arguments.length; i++) {
-          for (var key in arguments[i]) {
-            if (result[key] === undefined) {
-              result[key] = arguments[i][key];
-            }
-          }
-        }
-        return object;
-      };
-
       it('returns the first argument', function() {
         var to = {};
         var from = {};
@@ -258,19 +195,6 @@
     });
 
     describe('once', function() {
-
-      _.once = function(func) {
-        var called = false;
-        return function() {
-          if (!called) {
-            called = true;
-            return func();
-          } else {
-            return false;
-          }
-        };
-      };
-
       it('should only run a user-defined function if it hasn\'t been run before', function() {
         var num = 0;
         var increment = _.once(function() {
@@ -285,21 +209,6 @@
     });
 
     describe('memoize', function() {
-
-      _.memoize = function(func) {
-        var memo = {};
-
-        return function() {
-          var args = Array.prototype.slice.call(arguments);
-
-          if (args in memo) {
-            return memo[args];
-          } else {
-            return (memo[args] = func.apply(this, args));
-          }
-        }
-      };
-
       var add, memoAdd;
 
       beforeEach(function() {
@@ -335,19 +244,6 @@
     });
 
     describe('delay', function() {
-
-      _.delay = function(func, wait) {
-        var args = Array.prototype.slice.call(arguments).slice(2);
-
-        if (args) {
-          return setTimeout(function(){
-            return func.apply(this, args);
-          }, wait);
-        } else {
-          return setTimeout(func, wait);
-        }
-      };
-
       var callback;
 
       beforeEach(function() {
@@ -374,21 +270,6 @@
     });
 
     describe('shuffle', function() {
-
-      _.shuffle = function(array) {
-        var result = array.slice();
-        var tempi;
-        var tempj;
-        for (var i = array.length - 1; i >= 0; i--) {
-            var j = Math.floor(Math.random() * i);
-            tempi = result[i];
-            tempj = result[j];
-            result[i] = tempj;
-            result[j] = tempi;
-        }
-        return result;
-      };
-
       it('should not modify the original object', function() {
         var numbers = [4, 5, 6];
         var shuffled = _.shuffle(numbers).sort();

@@ -19,15 +19,6 @@
     });
 
     describe('first', function() {
-
-      _.first = function(array, n) {
-        if (arguments.length < 2) {
-          return array[0];
-        } else {
-          return array.slice(0, n);
-        }
-      };
-
       it('should be able to pull out the first element of an array', function() {
         expect(_.first([1,2,3])).to.equal(1);
       });
@@ -46,17 +37,6 @@
     });
 
     describe('last', function() {
-
-      _.last = function(array, n) {
-        if (arguments.length < 2) {
-          return array[array.length - 1];
-        } else if (array.length < n) {
-          return array;
-        } else {
-          return array.slice(array.length - n);
-        }
-      };
-
       it('should pull the last element from an array', function() {
         expect(_.last([1,2,3])).to.equal(3);
       });
@@ -75,19 +55,6 @@
     });
 
     describe('each', function() {
-
-      _.each = function(list, iteratee) {
-        if (Array.isArray(list)) {
-          for (var i = 0; i < list.length; i++) {
-            iteratee(list[i], i, list);
-          }
-        } else {
-          for (var key in list) {
-            iteratee(list[key], key, list);
-          }
-        }
-      };
-
       it('should iterate over arrays, providing access to the element, index, and array itself', function() {
         var animals = ['ant', 'bat', 'cat'];
         var iterationInputs = [];
@@ -137,17 +104,6 @@
     });
 
     describe('indexOf', function() {
-
-      _.indexOf = function(array, value) {
-        var result = -1;
-        for (var i = 0; i < array.length; i++) {
-          if (array[i] === value) {
-            return i;
-          }
-        }
-        return result;
-      };
-
       it('should find 40 in the list', function() {
         var numbers = [10, 20, 30, 40, 50];
 
@@ -174,17 +130,6 @@
     });
 
     describe('filter', function() {
-
-      _.filter = function(list, predicate) {
-        var result = [];
-        _.each(list, function(elem) {
-          if (predicate(elem)) {
-            result.push(elem);
-          }
-        });
-        return result;
-      };
-
       it('should return all even numbers in an array', function() {
         var isEven = function(num) { return num % 2 === 0; };
         var evens = _.filter([1, 2, 3, 4, 5, 6], isEven);
@@ -209,17 +154,6 @@
     });
 
     describe('reject', function() {
-
-      _.reject = function (list, predicate) {
-        var result = [];
-        _.each(list, function(elem) {
-          if (!predicate(elem)) {
-            result.push(elem);
-          }
-        });
-        return result;
-      };
-
       it('should reject all even numbers', function() {
         var isEven = function(num) { return num % 2 === 0; };
         var odds = _.reject([1, 2, 3, 4, 5, 6], isEven);
@@ -244,17 +178,6 @@
     });
 
     describe('uniq', function() {
-
-      _.uniq = function (array) {
-        var result = [];
-        _.each(array, function(elem) {
-          if (_.indexOf(result, elem) === -1) {
-            result.push(elem);
-          }
-        });
-        return result;
-      };
-
       it('should return all unique values contained in an unsorted array', function() {
         var numbers = [1, 2, 1, 3, 1, 4];
 
@@ -277,15 +200,6 @@
     });
 
     describe('map', function() {
-
-      _.map = function(list, iteratee) {
-        var result = [];
-        _.each(list, function(value, index, list) {
-          result.push(iteratee(value, index, list));
-        });
-        return result;
-      };
-
       it('should apply a function to every value in an array', function() {
         var doubledNumbers = _.map([1, 2, 3], function(num) {
           return num * 2;
@@ -305,13 +219,6 @@
     });
 
     describe('pluck', function() {
-
-      _.pluck = function(list, propertyName) {
-        return _.map(list, function(value) {
-          return value[propertyName];
-        });
-      };
-
       it('should return values contained at a user-defined property', function() {
         var people = [
           { name: 'moe', age: 30 },
@@ -334,20 +241,6 @@
     });
 
     describe('reduce', function() {
-
-      _.reduce = function(list, iteratee, memo) {
-        var isMemo = arguments.length > 2;
-        _.each(list, function(elem) {
-          if (!isMemo) {
-            isMemo = true;
-            memo = elem;
-          } else {
-            memo = iteratee(memo, elem);
-          }
-        });
-        return memo;
-      };
-
       it('should be able to sum up an array', function() {
         var add = function(tally, item) {return tally + item; };
         var total = _.reduce([1, 2, 3], add, 0);
