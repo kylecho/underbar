@@ -368,6 +368,15 @@
   // Calls the method named by functionOrKey on each value in the list.
   // Note: You will need to learn a bit about .apply to complete this.
   _.invoke = function(collection, functionOrKey, args) {
+    _.each(collection, function(elem, i){
+      if (typeof elem === 'function') {
+        if (collection.hasOwnProperty('functionOrKey')) {
+          return elem[functionOrKey].apply(args);
+        } else {
+          return elem.apply(args);
+        }
+      }
+    });
   };
 
   // Sort the object's values by a criterion produced by an iterator.
@@ -400,6 +409,17 @@
   // Take the difference between one array and a number of other arrays.
   // Only the elements present in just the first array will remain.
   _.difference = function(array) {
+    var otherArrs = Array.prototype.slice.call(arguments).slice(1);
+    var others = _.reduce(otherArrs, function(a,b){ return a.concat(b); });
+
+    var result = [];
+    for (var i = 0; i < array.length; i++) {
+      if (_.indexOf(others, array[i]) === -1) {
+        result.push(array[i]);
+      }
+    }
+
+    return result;
   };
 
   // Returns a function, that, when invoked, will only be triggered at most once
@@ -408,5 +428,17 @@
   //
   // Note: This is difficult! It may take a while to implement.
   _.throttle = function(func, wait) {
+    var called = false;
+    return function(){
+      if (!called) {
+        called = true;
+        setTimeout(function(){
+          called = false;
+        }, wait);
+        return func();
+      } else {
+        return 'Must wait until called again';
+      }
+    };
   };
 }());
