@@ -368,15 +368,6 @@
   // Calls the method named by functionOrKey on each value in the list.
   // Note: You will need to learn a bit about .apply to complete this.
   _.invoke = function(collection, functionOrKey, args) {
-    _.each(collection, function(elem, i){
-      if (typeof elem === 'function') {
-        if (collection.hasOwnProperty('functionOrKey')) {
-          return elem[functionOrKey].apply(args);
-        } else {
-          return elem.apply(args);
-        }
-      }
-    });
   };
 
   // Sort the object's values by a criterion produced by an iterator.
@@ -403,7 +394,24 @@
 
   // Takes an arbitrary number of arrays and produces an array that contains
   // every item shared between all the passed-in arrays.
-  _.intersection = function() {
+  _.intersection = function(arrays) {
+    var arrays = Array.prototype.slice.call(arguments);
+    var result = [];
+    var intersect = true;
+    // loop through arrays and check for each elements of the first array.
+    for (var i = 0; i < arrays[0].length; i++) {
+      for (var j = 1; j < arrays.length; j++) {
+        if (_.indexOf(arrays[j], arrays[0][i]) === -1) {
+          intersect = false;
+        }
+      }
+      if (intersect === true) {
+        result.push(arrays[0][i]);
+      }
+      intersect = true;
+    }
+
+    return result;
   };
 
   // Take the difference between one array and a number of other arrays.
