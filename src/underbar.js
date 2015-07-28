@@ -390,6 +390,26 @@
   //
   // Hint: Use Array.isArray to check if something is an array
   _.flatten = function(nestedArray, result) {
+    var recursiveFlatten = function(array) {
+      if (_.every(array, function(elem) {
+        return !(Array.isArray(elem));
+      })) {
+        return array;
+      } else {
+        array = _.reduce(array, function(a, b){
+          return a.concat(b);
+        }, []);
+        return recursiveFlatten(array);
+      }
+    };
+
+    if (result === true) {
+      _.reduce(array, function(a, b){
+          return a.concat(b);
+      }, []);
+    } else {
+      return recursiveFlatten(nestedArray);
+    }
   };
 
   // Takes an arbitrary number of arrays and produces an array that contains
